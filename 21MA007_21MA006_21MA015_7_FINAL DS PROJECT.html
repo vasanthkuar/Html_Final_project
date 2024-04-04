@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Contact Form</h2>
+        <form action="#" method="post" id="contact-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <input type="submit" value="Submit">
+        </form>
+
+        <table id="submitted-info">
+            <thead>
+                <tr>
+                    <th class="index-column">Index</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script >
+        document.getElementById("contact-form").addEventListener("submit", function (event) {
+    event.preventDefault();
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var table = document.getElementById("submitted-info").getElementsByTagName("tbody")[0];
+    if (!isEmailExists(table, email)) {
+        var index = table.rows.length + 1;
+        var row = table.insertRow();
+        var cellIndex = row.insertCell(0);
+        var cell1 = row.insertCell(1);
+        var cell2 = row.insertCell(2);
+        cellIndex.innerText = index;
+        cellIndex.classList.add("index-column");
+        cell1.innerText = name;
+        cell2.innerText = email;
+        clearForm();
+    } else {
+        alert("Email already exists!");
+    }
+});
+
+function isEmailExists(table, email) {
+    var rows = table.rows;
+    for (var i = 0; i < rows.length; i++) {
+        var rowEmail = rows[i].cells[2].innerText;
+        if (rowEmail === email) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function clearForm() {
+    document.getElementById("name").value = "";
+    document.getElementById("email").value = "";
+}
+    </script> 
+</body>
+
+</html>
